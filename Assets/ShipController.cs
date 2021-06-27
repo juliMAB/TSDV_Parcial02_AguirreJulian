@@ -5,61 +5,48 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
-    [SerializeField] float MotorForce;
-    [SerializeField] float fuel;
-    [SerializeField] float rotationIntervalsOnDgres;
-    [SerializeField] float zoomDistance;
-    [SerializeField] LayerMask floorLayer;
+    private ShipData data;
+    public ShipData setData { set { data = value; } }
 
-
-    float distancetoFloor;
-    private Rigidbody2D rb2d;
-    public Rigidbody2D rb { get { return rb2d; } }
-    private ParticleSystem particleS;
+    public ShipData GetData() { return data; }
     public Action OnFuelUse;
     
-
-    void Start()
-    {
-        rb2d = GetComponent<Rigidbody2D>();
-        particleS = GetComponent<ParticleSystem>();
-    }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            transform.Rotate(Vector3.forward, rotationIntervalsOnDgres, Space.Self);
+            transform.Rotate(Vector3.forward, data.angle, Space.Self);
+
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D)|| Input.GetKeyDown(KeyCode.RightArrow))
         {
-            transform.Rotate(Vector3.forward, -rotationIntervalsOnDgres, Space.Self);
+            transform.Rotate(Vector3.forward, -data.angle, Space.Self);
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.Space)) && data.fuel > 0)
         {
-            rb2d.AddForce(transform.up* MotorForce * 0.0001f);
-            particleS.Play();
-            UseFuel();
+            EngineRunning();
         }
-        else if (Input.GetKey(KeyCode.Space))
+        else if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && data.fuel > 0)
         {
-            rb2d.AddForce(transform.up * MotorForce*0.0001f);
-            particleS.Play();
-            UseFuel();
+            EngineRunning();
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
-            particleS.Stop();
+            data.particleS.Stop();
         }
         //actualizar la distacian al piso.
-        distancetoFloor = Vector3.Distance(transform.position,(Physics2D.Raycast(transform.position+transform.localScale/2, Vector2.down)).point);
+        data.altitude = Vector3.Distance(transform.position+Vector3.down* transform.localScale.y/2,(Physics2D.Raycast(transform.position+transform.localScale/2, Vector2.down)).point);
+        Debug.DrawRay(transform.position + Vector3.down * transform.localScale.y / 2,Vector3.down);
     }
     void UseFuel()
     {
-        fuel -= 0.1f;
+        data.lessFuel(0.1f);
         OnFuelUse?.Invoke();
     }
-    public bool OnZoomDistance()
+    void EngineRunning()
     {
-        return Physics2D.OverlapCircle(transform.position, zoomDistance, floorLayer) !=null;
+        data.rb2d.AddForce(transform.up * data.force * 0.0001f);
+        data.particleS.Play();
+        UseFuel();
     }
 }
