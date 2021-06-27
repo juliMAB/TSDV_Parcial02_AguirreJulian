@@ -50,6 +50,7 @@ public class ProceduralGeneration : MonoBehaviour
         //generar terreno basico con elevaciones y bajadas.
         for (int i = 1; i < cantNodosExtras; i++)
         {
+
             spriteShapeController.spline.InsertPointAt(i, Vector3.up * (Random.Range(minHeight, maxHeight) * 0.1f) + Vector3.up * lastposition.y + Vector3.right * posinitial.x + Vector3.right * i * bounds.transform.localScale.x / (cantNodosExtras - 1));
             lastposition = spriteShapeController.spline.GetPosition(i);
             if (hightPoint<= spriteShapeController.spline.GetPosition(i).y)
@@ -89,11 +90,22 @@ public class ProceduralGeneration : MonoBehaviour
             }
             else
             {
-                spriteShapeController.spline.SetPosition(index, new Vector3(spriteShapeController.spline.GetPosition(index).x, spriteShapeController.spline.GetPosition(index - 1).y, 0));
-                GameObject go = Instantiate(prefabText, spriteShapeController.spline.GetPosition(index), Quaternion.identity, textConteiner.transform);
+                for (int j = index-1; j < index - 1+3; j++)
+                {
+                    Vector3 pos = new Vector3(spriteShapeController.spline.GetPosition(j).x, spriteShapeController.spline.GetPosition(index).y);
+                    spriteShapeController.spline.SetPosition(j, pos);
+                }
+                GameObject go = new GameObject(name = "landZoneCol");
+                go.transform.position = spriteShapeController.spline.GetPosition(index);
+                go = Instantiate(prefabText, spriteShapeController.spline.GetPosition(index), Quaternion.identity, textConteiner.transform);
                 go.name = "LandZone" + i;
+                go.transform.position += Vector3.down * 0.2f;
+                go.GetComponentInChildren<TextMeshPro>().text = "X2";
+                
+
                 zonesList[index--] = zones.save; index++;
                 zonesList[index] = zones.save;
+                zonesList[index++] = zones.save; index--;
             }
         }
         
