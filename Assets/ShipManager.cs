@@ -10,7 +10,6 @@ public class ShipManager : ShipController
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("CollisionEnter " + collision.collider.name);
         if (Mathf.Abs (rb.velocity.x)+ Mathf.Abs(rb.velocity.y)>maxVelocityToLand)
         {
             print("Explote!");
