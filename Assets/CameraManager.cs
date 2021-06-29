@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] ShipManager ship;
+
     Vector3 initialpos;
     private Camera maincamera;
 
@@ -16,10 +17,10 @@ public class CameraManager : MonoBehaviour
         ship.OnZoomOut += ZoomOut;
     }
 
-    void ZoomIn()
+    void ZoomIn(Vector3 point)
     {
         maincamera.orthographicSize /= 2;
-        transform.position = ship.transform.position + Vector3.forward * initialpos.z ;
+        transform.position = Vector3.Lerp(ship.transform.position + Vector3.forward * initialpos.z, point, 0.5f)  ;
     }
     void ZoomOut()
     {

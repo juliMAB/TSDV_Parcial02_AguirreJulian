@@ -9,7 +9,7 @@ public class ShipManager : MonoBehaviour
     //------------------------
     public Action OnDestroy;
     public Action OnFastMove;
-    public Action OnZoomIn;
+    public Action<Vector3> OnZoomIn;
     public Action OnZoomOut;
     public Action OnLanding;
     //------------------------
@@ -18,7 +18,9 @@ public class ShipManager : MonoBehaviour
     ShipController ShipController;
     Vector2 lastVelocity;
     float ofset;
+    BoxCollider2D boxCollider2D;
     RaycastHit2D hitImpact;
+    SpriteRenderer spriteRenderer;
     public ShipData GetData()
     {
         return data;
@@ -26,29 +28,39 @@ public class ShipManager : MonoBehaviour
 
     private void Start()
     {
+        data.enabled = true;
         data.rb2d = GetComponent<Rigidbody2D>();
         data.particleS = GetComponent<ParticleSystem>();
         ShipController = GetComponent<ShipController>();
         ShipController.setData = data;
         OnDestroy += Destroing;
-        ofset = transform.GetComponent<BoxCollider2D>().size.y/2;
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        ofset = boxCollider2D.size.y/2;
+
     }
     void Destroing()
     {
-        //GetComponent<SpriteRenderer>().enabled = false;
-        //GetComponent<BoxCollider2D>().enabled = false;
-        //Instantiate(destroyShip,transform.position,Quaternion.identity, (new GameObject("Basura")).transform);
-        //Destroy(gameObject, 1);
+        print("Explote!");
+        GameObject go = Instantiate(destroyShip, transform.position, Quaternion.identity, (new GameObject("Basura")).transform);
+        hide();
+        Detonate();
+        Destroy(go, 5);
     }
-    public void hide()
+    void hide()
     {
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<ParticleSystem>().Pause();
+        spriteRenderer.enabled = false;
+        boxCollider2D.enabled = false;
+        data.enabled = false;
+        data.rb2d.velocity = Vector2.zero;
+        data.rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
     }
     public void show()
     {
-
+        spriteRenderer.enabled = true;
+        boxCollider2D.enabled = true;
+        data.enabled = true;
+        data.rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
     private void FixedUpdate()
     {
@@ -57,51 +69,48 @@ public class ShipManager : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (Mathf.RoundToInt((Mathf.Abs(lastVelocity.x) + Mathf.Abs(lastVelocity.y))) * 10 > data.maxVelocityToLanding /*|| Vector2.Distance(hitImpact.normal, transform.position) > 10*/)
+        if (Mathf.RoundToInt((Mathf.Abs(lastVelocity.x) + Mathf.Abs(lastVelocity.y))) > data.maxVelocityToLanding /*|| Vector2.Distance(hitImpact.normal, transform.position) > 10*/)
         {
-            print("velocidad actual: " + Mathf.RoundToInt( (Mathf.Abs(lastVelocity.x * 10) + Mathf.Abs(lastVelocity.y * 10))));
-            print("Explote!");
-            Instantiate(destroyShip, transform.position, Quaternion.identity, (new GameObject("Basura")).transform);
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
             OnDestroy?.Invoke();
+            print("me rompi por exceso de facha.");
+        }
+        if (transform.rotation.eulerAngles != Vector3.zero)
+        {
+            OnDestroy?.Invoke();
+            print("me rompi por no estar recto.");
+            print(transform.rotation.eulerAngles);
         }
         //print("Choque!");
     }
-    bool OnZoomDistance()
-    {
-        return Physics2D.OverlapCircle(transform.position, data.distanceToZoom, data.layerfloor) != null;
-    }
     void Update()
     {
-        if (OnZoomDistance()!=zoomIn)
+        if (Vector3.Distance(hitImpact.point,transform.position)<data.distanceToZoom)
         {
-            if (zoomIn==true)
+            if (zoomIn == false)
+            {
+                print("Entrando al zoom");
+                zoomIn = true;
+                OnZoomIn?.Invoke(hitImpact.point);
+            }
+        }
+        else
+        {
+            if (zoomIn == true)
             {
                 print("Saliendo del zoom");
                 zoomIn = false;
                 OnZoomOut?.Invoke();
-            }
-            else
-            {
-                print("Entrando al zoom");
-                zoomIn = true;
-                OnZoomIn?.Invoke();
             }
         }
 
         //actualizar la distacian al piso.
         hitImpact = (Physics2D.Raycast(transform.position ,Vector2.down,20,data.layerfloor));
         data.altitude = Vector3.Distance(transform.position+ Vector3.down*ofset, hitImpact.point);
+        //borrar.
         circulo(hitImpact.point);
         Debug.DrawRay(transform.position +Vector3.down* ofset, Vector3.down);
     }
-    void circulo(Vector3 a)
-    {
-        Debug.DrawLine(a, a+Vector3.left);
-        Debug.DrawLine(a, a+Vector3.right);
-        Debug.DrawLine(a, a+Vector3.up);
-        Debug.DrawLine(a, a+Vector3.down);
-    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.transform.gameObject.tag == "LandingZone")
@@ -117,4 +126,29 @@ public class ShipManager : MonoBehaviour
             }
         }
     }
+    void Detonate()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
+        foreach (Collider2D hit in colliders)
+        {
+            Vector2 direction = hit.transform.position - transform.position;
+
+            Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
+            if (rb!=null)
+            {
+                rb.AddForce(direction * 100);
+            }
+
+
+        }
+    }
+    //borrar.
+    void circulo(Vector3 a)
+    {
+        Debug.DrawLine(a, a + Vector3.left);
+        Debug.DrawLine(a, a + Vector3.right);
+        Debug.DrawLine(a, a + Vector3.up);
+        Debug.DrawLine(a, a + Vector3.down);
+    }
+    
 }
