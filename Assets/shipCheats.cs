@@ -23,6 +23,10 @@ public class shipCheats : MonoBehaviour
         {
             transform.position += (Vector3)Vector2.right * Time.deltaTime;
         }
+        else if (Input.GetKey(KeyCode.O))
+        {
+            FindObjectOfType<LevelManager>().GetShip().GetData().lessFuel(10);
+        }
 
     }
 }

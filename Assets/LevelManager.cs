@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MonoBehaviourSingletonScript;
+using System;
 
 public class LevelManager : MonoBehaviourSingleton<LevelManager>
 {
-    [SerializeField] int score;
-    [SerializeField] float timeInGame;
     [SerializeField] ProceduralGeneration generator;
-    public float timeGame { get { return timeInGame; } }
-
     [SerializeField] GameObject player;
-    public ShipManager shipManager;
+
+    ShipManager shipManager;
+    [SerializeField] float timeToNextLevel;
+    public Action<int> OnScore;
+    public Action OnReset;
+    int score;
+    float timeInGame;
+    [SerializeField] List<LandPoint> landzones = new List<LandPoint>();
+    public float timeGame { get { return timeInGame; } }
+    bool timeRuning;
+
     TRS initialShip;
-    
 
     struct TRS
     {
@@ -21,8 +27,14 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
         public Quaternion r;
         public Vector3 s;
     }
+
+    public ShipManager GetShip()
+    {
+        return shipManager;
+    }
     void Start()
     {
+        timeRuning = true;
         shipManager = player.GetComponent<ShipManager>();
         initialShip.t = player.transform.position;
         initialShip.r = player.transform.rotation;
@@ -30,19 +42,19 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
         shipManager.OnLanding += WinMatch;
         shipManager.OnDestroy += LoseMatch;
         generator.GenerateTerrain();
+        landzones = generator.GetLandZones();
     }
 
     void Update()
     {
-        timeInGame += Time.deltaTime;
+        if (timeRuning)
+            timeInGame += Time.deltaTime;
+        
+        
         if (Input.GetKey(KeyCode.R))
         {
             ResetLevel();
         }
-    }
-    public void AddScore(int _score)
-    {
-        score += _score;
     }
 
     void LoseMatch()
@@ -55,9 +67,11 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
     void WinMatch()
     {
         print("Ganaste");
-        //mostrar la victoria.
-        //sumar los puntos.
-        //cargar siguiente nivel.
+        //mostrar la victoria. //listo desde ui.
+        
+        score += 50* getMultiply(); //sumar los puntos. 
+        OnScore?.Invoke(score);
+        Invoke("ResetLevel", timeToNextLevel);
     }
 
     private void ResetLevel()
@@ -67,5 +81,19 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
         player.transform.localScale = initialShip.s;
         generator.GenerateTerrain();
         shipManager.show();
+        timeInGame = 0;
+        OnReset?.Invoke();
+    }
+    int getMultiply()
+    {
+        foreach (var go in landzones)
+        {
+            if (go.onContact)
+            {
+                return go.multiplier;
+            }
+            
+        }
+        return 0;
     }
 }

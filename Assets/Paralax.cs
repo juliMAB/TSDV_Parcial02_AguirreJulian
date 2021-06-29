@@ -10,10 +10,10 @@ public class Paralax : MonoBehaviour
     [SerializeField] GameObject layer4;
     [SerializeField] GameObject layer5;
     [SerializeField] GameObject ship;
-    [SerializeField] Vector3 offset2;
-    [SerializeField] Vector3 offset3;
-    [SerializeField] Vector3 offset4;
-    [SerializeField] Vector3 offset5;
+     Vector3 offset2;
+     Vector3 offset3;
+     Vector3 offset4;
+     Vector3 offset5;
     private void Start()
     {
         offset2 = layer2.transform.position;

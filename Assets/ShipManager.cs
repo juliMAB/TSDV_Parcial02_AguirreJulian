@@ -12,9 +12,11 @@ public class ShipManager : MonoBehaviour
     public Action<Vector3> OnZoomIn;
     public Action OnZoomOut;
     public Action OnLanding;
+    public Action OnLowFuel;
     //------------------------
     [SerializeField] GameObject destroyShip;
     bool zoomIn=false;
+    public bool TooFast=false;
     ShipController ShipController;
     Vector2 lastVelocity;
     float ofset;
@@ -65,16 +67,17 @@ public class ShipManager : MonoBehaviour
     private void FixedUpdate()
     {
         lastVelocity = data.rb2d.velocity;
+        TooFast = Mathf.RoundToInt((Mathf.Abs(lastVelocity.x) + Mathf.Abs(lastVelocity.y))) > data.maxVelocityToLanding;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (Mathf.RoundToInt((Mathf.Abs(lastVelocity.x) + Mathf.Abs(lastVelocity.y))) > data.maxVelocityToLanding /*|| Vector2.Distance(hitImpact.normal, transform.position) > 10*/)
+        if (TooFast)
         {
             OnDestroy?.Invoke();
             print("me rompi por exceso de facha.");
         }
-        if (transform.rotation.eulerAngles != Vector3.zero)
+        //si estoy rotado tengo un margen de error.
+        if (Vector3.Distance(transform.rotation.eulerAngles, Vector3.zero) > 0.1)
         {
             OnDestroy?.Invoke();
             print("me rompi por no estar recto.");
@@ -102,7 +105,6 @@ public class ShipManager : MonoBehaviour
                 OnZoomOut?.Invoke();
             }
         }
-
         //actualizar la distacian al piso.
         hitImpact = (Physics2D.Raycast(transform.position ,Vector2.down,20,data.layerfloor));
         data.altitude = Vector3.Distance(transform.position+ Vector3.down*ofset, hitImpact.point);

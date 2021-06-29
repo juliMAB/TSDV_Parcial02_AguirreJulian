@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class ShipData
 {
+    public Action<int> OnLowFuel;
     public bool enabled;
 
     [SerializeField] float motorForce;
@@ -48,6 +49,14 @@ public class ShipData
     public void lessFuel(float cant)
     {
         fuelShip -= cant;
+        if (0.20f > fuel / totalFuel)
+        {
+            OnLowFuel?.Invoke(20);
+            if (0 >= fuel / totalFuel)
+                OnLowFuel?.Invoke(0);
+        }
+            
+
     }
 
     

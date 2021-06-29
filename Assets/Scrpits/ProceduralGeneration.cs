@@ -23,6 +23,7 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] GameObject prefabText;
     [SerializeField] GameObject textConteiner;
 
+    List<LandPoint> landzones = new List<LandPoint>();
 
     float maxHight;
 
@@ -34,6 +35,11 @@ public class ProceduralGeneration : MonoBehaviour
         save,
         mountain,
         last
+    }
+
+    public List<LandPoint> GetLandZones()
+    {
+        return landzones;
     }
     public void GenerateTerrain()
     {
@@ -99,8 +105,13 @@ public class ProceduralGeneration : MonoBehaviour
                 go = Instantiate(prefabText, spriteShapeController.spline.GetPosition(index), Quaternion.identity, textConteiner.transform);
                 go.name = "LandZone" + i;
                 go.transform.position += Vector3.down * 0.2f;
-                go.GetComponentInChildren<TextMeshPro>().text = "X2";
-                
+                LandPoint lp = go.GetComponent<LandPoint>();
+                lp.multiplier = Random.Range(1, 5);
+                go.GetComponentInChildren<TextMeshPro>().text = "X" + lp.multiplier;
+                landzones.Add(lp);
+
+
+
 
                 zonesList[index--] = zones.save; index++;
                 zonesList[index] = zones.save;
