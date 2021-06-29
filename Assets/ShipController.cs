@@ -34,9 +34,7 @@ public class ShipController : MonoBehaviour
         {
             data.particleS.Stop();
         }
-        //actualizar la distacian al piso.
-        data.altitude = Vector3.Distance(transform.position+Vector3.down* transform.localScale.y/2,(Physics2D.Raycast(transform.position+transform.localScale/2, Vector2.down)).point);
-        Debug.DrawRay(transform.position + Vector3.down * transform.localScale.y / 2,Vector3.down);
+
     }
     void UseFuel()
     {
