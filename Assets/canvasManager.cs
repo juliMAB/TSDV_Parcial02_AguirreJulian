@@ -15,7 +15,7 @@ public class canvasManager : MonoBehaviour
     [SerializeField] Slider sliderFuel              ;
     [Header("ref2")]
     private ShipData shipData;
-    [SerializeField] private int modificador=10;
+    [SerializeField] private int modificador=1;
     private int minutos;
     private int segundos;
 
@@ -25,7 +25,6 @@ public class canvasManager : MonoBehaviour
     {
         shipData = levelManager.shipManager.GetData();
         sliderFuel.maxValue = shipData.initialfuel;
-
     }
     void Update()
     {
