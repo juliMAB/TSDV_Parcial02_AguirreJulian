@@ -13,26 +13,32 @@ public class ShipController : MonoBehaviour
     
     public void Update()
     {
+        if (!data.enabled)
+            return;
         if (Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.Rotate(Vector3.forward, data.angle, Space.Self);
-
+            return;
         }
         else if (Input.GetKeyDown(KeyCode.D)|| Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.Rotate(Vector3.forward, -data.angle, Space.Self);
+            return;
         }
         else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.Space)) && data.fuel > 0)
         {
             EngineRunning();
+            return;
         }
         else if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && data.fuel > 0)
         {
             EngineRunning();
+            return;
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             data.particleS.Stop();
+            return;
         }
 
     }
@@ -43,7 +49,7 @@ public class ShipController : MonoBehaviour
     }
     void EngineRunning()
     {
-        data.rb2d.AddForce(transform.up * data.force * 0.0001f);
+        data.rb2d.AddForce(transform.up * data.force);
         data.particleS.Play();
         UseFuel();
     }
