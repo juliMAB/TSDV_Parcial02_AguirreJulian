@@ -35,8 +35,7 @@ public class ProceduralGeneration : MonoBehaviour
         mountain,
         last
     }
-
-    void terrenogernera()
+    public void GenerateTerrain()
     {
         maxHight = bounds.transform.localScale.y / 2;
         float hightPoint=0;
@@ -107,17 +106,6 @@ public class ProceduralGeneration : MonoBehaviour
                 zonesList[index] = zones.save;
                 zonesList[index++] = zones.save; index--;
             }
-        }
-        
-    }
-    void Start()
-    {
-        terrenogernera();
-    }
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.P)){
-            terrenogernera();
-        }
+        }  
     }
 }
