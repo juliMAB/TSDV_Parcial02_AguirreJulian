@@ -6,18 +6,16 @@ using UnityEngine;
 [Serializable]
 public class ShipData
 {
-    
+    public bool enabled;
 
     [SerializeField] float motorForce;
     public float force { get { return motorForce; } }
-
 
     [SerializeField] float fuelShip;
     public float fuel { get { return fuelShip; } }
 
     [SerializeField] float totalFuel;
     public float initialfuel { get { return totalFuel; } }
-
 
     [SerializeField] float rotationAngle;
     public float angle { get { return rotationAngle; } }
@@ -42,11 +40,15 @@ public class ShipData
     public ParticleSystem particleS { get { return particleSystem; } set { particleSystem = value; } }
 
     //------------------------------------
+    public void initialFuel()
+    {
+        fuelShip = totalFuel;
+    }
 
-    
     public void lessFuel(float cant)
     {
         fuelShip -= cant;
     }
 
+    
 }
