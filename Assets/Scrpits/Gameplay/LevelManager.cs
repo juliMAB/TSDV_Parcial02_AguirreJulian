@@ -62,16 +62,19 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
         print("Perdite");
         //mostrar la derrota.
         //sacarte y llevarte al scoreboard.
+        Invoke("ResetLevel", timeToNextLevel);
+        landzones.Clear();
     }
 
     void WinMatch()
     {
         print("Ganaste");
         //mostrar la victoria. //listo desde ui.
-        
         score += 50* getMultiply(); //sumar los puntos. 
+        print("score");
         OnScore?.Invoke(score);
         Invoke("ResetLevel", timeToNextLevel);
+        landzones.Clear();
     }
 
     private void ResetLevel()
@@ -94,6 +97,6 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
             }
             
         }
-        return 0;
+        return 1;
     }
 }
