@@ -19,7 +19,6 @@ public class ProceduralGeneration : MonoBehaviour
 
     [SerializeField] SpriteShapeController spriteShapeController;
     [SerializeField] GameObject bounds;
-
     [SerializeField] GameObject prefabText;
     [SerializeField] GameObject textConteiner;
 
@@ -100,9 +99,8 @@ public class ProceduralGeneration : MonoBehaviour
                     Vector3 pos = new Vector3(spriteShapeController.spline.GetPosition(j).x, spriteShapeController.spline.GetPosition(index).y);
                     spriteShapeController.spline.SetPosition(j, pos);
                 }
-                GameObject go = new GameObject(name = "landZoneCol");
-                go.transform.position = spriteShapeController.spline.GetPosition(index);
-                go = Instantiate(prefabText, spriteShapeController.spline.GetPosition(index), Quaternion.identity, textConteiner.transform);
+                //go.transform.position = spriteShapeController.spline.GetPosition(index);
+                GameObject go = Instantiate(prefabText, spriteShapeController.spline.GetPosition(index), Quaternion.identity, textConteiner.transform);
                 go.name = "LandZone" + i;
                 go.transform.position += Vector3.down * 0.2f;
                 LandPoint lp = go.GetComponent<LandPoint>();

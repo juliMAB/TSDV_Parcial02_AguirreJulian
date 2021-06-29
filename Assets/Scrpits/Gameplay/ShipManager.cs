@@ -27,6 +27,12 @@ public class ShipManager : MonoBehaviour
     {
         return data;
     }
+    public void StartPlayer()
+    {
+        data.enabled = true;
+        data.rb2d = GetComponent<Rigidbody2D>();
+        data.particleS = GetComponent<ParticleSystem>();
+    }
 
     private void Start()
     {

@@ -18,7 +18,7 @@ public class canvasManager : MonoBehaviour
     [SerializeField] Slider sliderFuel              ;
     [Header("ref2")]
     private ShipManager ship;
-    private ShipData shipData;
+    [SerializeField] private ShipData shipData;
     [SerializeField] private int modificador=1;
     private int minutos;
     private int segundos;

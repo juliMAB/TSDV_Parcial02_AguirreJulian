@@ -25,7 +25,7 @@ public class UI_TitlePart : MonoBehaviour
 
     public void FadeOut()
     {
-        anim.SetTrigger("FadeOut");
+        //anim.SetTrigger("FadeOut");
     }
 
 }
