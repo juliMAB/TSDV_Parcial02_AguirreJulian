@@ -6,18 +6,36 @@ using MonoBehaviourSingletonScript;
 public class LevelManager : MonoBehaviourSingleton<LevelManager>
 {
     [SerializeField] int score;
-    [SerializeField] public int timeInGame;
+    [SerializeField] float timeInGame;
+    [SerializeField] ProceduralGeneration generator;
+    public float timeGame { get { return timeInGame; } }
 
-    public GameObject player;
-    public ShipController shipController;
+    [SerializeField] GameObject player;
     public ShipManager shipManager;
+    TRS initialShip;
+    
 
+    struct TRS
+    {
+        public Vector3 t;
+        public Quaternion r;
+        public Vector3 s;
+    }
     void Start()
     {
-        shipController = player.GetComponent<ShipController>();
         shipManager = player.GetComponent<ShipManager>();
+        initialShip.t = player.transform.position;
+        initialShip.r = player.transform.rotation;
+        initialShip.s = player.transform.localScale;
+        shipManager.OnLanding += WinMatch;
+        shipManager.OnDestroy += LoseMatch;
+        generator.GenerateTerrain();
     }
 
+    void Update()
+    {
+        timeInGame += Time.deltaTime;  
+    }
     public void AddScore(int _score)
     {
         score += _score;
@@ -25,14 +43,24 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
 
     void LoseMatch()
     {
+        print("Perdite");
         //mostrar la derrota.
         //sacarte y llevarte al scoreboard.
     }
 
     void WinMatch()
     {
+        print("Ganaste");
         //mostrar la victoria.
         //sumar los puntos.
         //cargar siguiente nivel.
+    }
+
+    private void ResetLevel()
+    {
+        player.transform.position = initialShip.t;
+        player.transform.rotation = initialShip.r;
+        player.transform.localScale = initialShip.s;
+        generator.GenerateTerrain();
     }
 }
