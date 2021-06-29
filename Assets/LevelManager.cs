@@ -34,7 +34,11 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
 
     void Update()
     {
-        timeInGame += Time.deltaTime;  
+        timeInGame += Time.deltaTime;
+        if (Input.GetKey(KeyCode.R))
+        {
+            ResetLevel();
+        }
     }
     public void AddScore(int _score)
     {
@@ -62,5 +66,6 @@ public class LevelManager : MonoBehaviourSingleton<LevelManager>
         player.transform.rotation = initialShip.r;
         player.transform.localScale = initialShip.s;
         generator.GenerateTerrain();
+        shipManager.show();
     }
 }
