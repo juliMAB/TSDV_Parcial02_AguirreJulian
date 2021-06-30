@@ -11,13 +11,12 @@ public class LevelManager : MonoBehaviour
     [NonSerialized] ShipManager shipManager = null;
     //------------------------
     public Action<int> OnScore;
+    public Action OnEndGame;
     public Action OnReset;
     //------------------------
     [NonSerialized] int score;
-    [NonSerialized] float timeToNextLevel;
     [NonSerialized] List<LandPoint> landzones = new List<LandPoint>();
     [NonSerialized] float timeInGame; public float timeGame { get { return timeInGame; } }
-
     [NonSerialized] bool timeRuning;
     [NonSerialized] bool pause=false;
 
@@ -62,6 +61,7 @@ public class LevelManager : MonoBehaviour
         initialShip.s = player.transform.localScale;
         shipManager.OnLanding += WinMatch;
         shipManager.OnDestroy += LoseMatch;
+        
         generator.GenerateTerrain();
         landzones = generator.GetLandZones();
     }
@@ -71,28 +71,46 @@ public class LevelManager : MonoBehaviour
         if (timeRuning)
             timeInGame += Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.R))
-            ResetLevel();
+        //if (Input.GetKey(KeyCode.R))
+        //    ResetLevel();
     }
 
     void LoseMatch()
     {
         print("Perdite");   //mostrar la derrota.
         //sacarte y llevarte al scoreboard.
-        Invoke("ResetLevel", timeToNextLevel);
         landzones.Clear();
-
+        pause = true;
+        shipManager.GetData().lessFuel(10);
+        if (GetShip().GetData().fuel<=0)
+        {
+            EndGame();
+            Time.timeScale = 1;
+        }
+    }
+    public void GoNextLevel()
+    {
+        pause = false;
+        ResetLevel();
+    }
+    void EndGame()
+    {
+        GameManager.Get().OnGameOver(score);
+        LoaderManager.Get().LoadSceneAsyncWithLoadingBar("End");
+        //pasarle el dato al gm y mandar a la siguiente escena.
     }
 
     void WinMatch()
     {
+        
         print("Ganaste");
         score += 50* getMultiply(); //sumar los puntos. 
         print("score");
         OnScore?.Invoke(score);
-        Invoke("ResetLevel", timeToNextLevel);
         landzones.Clear();
+        pause = true;
     }
+
 
     private void ResetLevel()
     {

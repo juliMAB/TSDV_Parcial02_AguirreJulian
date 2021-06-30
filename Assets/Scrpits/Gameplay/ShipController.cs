@@ -10,7 +10,7 @@ public class ShipController : MonoBehaviour
 
     public ShipData GetData() { return data; }
     public Action OnFuelUse;
-    
+
     public void Update()
     {
         if (!data.enabled)

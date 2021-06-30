@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShipManager : MonoBehaviour
 {
     [SerializeField] ShipData data = new ShipData();
+    [SerializeField] GameObject trash;
     //------------------------
     public Action OnDestroy;
     public Action OnFastMove;
@@ -50,7 +51,7 @@ public class ShipManager : MonoBehaviour
     void Destroing()
     {
         print("Explote!");
-        GameObject go = Instantiate(destroyShip, transform.position, Quaternion.identity, (new GameObject("Basura")).transform);
+        GameObject go = Instantiate(destroyShip, transform.position, Quaternion.identity, trash.transform);
         hide();
         Detonate();
         Destroy(go, 5);
@@ -87,7 +88,11 @@ public class ShipManager : MonoBehaviour
         {
             OnDestroy?.Invoke();
             print("me rompi por no estar recto.");
-            print(transform.rotation.eulerAngles);
+        }
+        if (data.fuel<=0)
+        {
+            OnLowFuel?.Invoke();
+            print("fin de conbustible.");
         }
         //print("Choque!");
     }

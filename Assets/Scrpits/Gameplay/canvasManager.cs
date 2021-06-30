@@ -16,9 +16,10 @@ public class canvasManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI end            ;
     [SerializeField] LevelManager levelManager      ;
     [SerializeField] Slider sliderFuel              ;
+    [SerializeField] GameObject nextLevel;
     [Header("ref2")]
     private ShipManager ship;
-    [SerializeField] private ShipData shipData;
+    private ShipData shipData;
     [SerializeField] private int modificador=1;
     private int minutos;
     private int segundos;
@@ -75,11 +76,13 @@ public class canvasManager : MonoBehaviour
     {
         end.enabled = true;
         end.text = "You Win, score save";
+        nextLevel.SetActive(true);
     }
     void ShowLose()
     {
         end.enabled = true;
         end.text = "You Fail no score to you";
+        nextLevel.SetActive(true);
     }
 
     void ResetUI()
