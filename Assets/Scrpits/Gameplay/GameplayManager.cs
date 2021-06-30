@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] UI_Game ui_Game = null;
 
     static public GameplayManager instance;
 
@@ -23,7 +22,6 @@ public class GameplayManager : MonoBehaviour
     {
         gamePaused = !gamePaused;
         Time.timeScale = gamePaused ? 0 : 1;
-        ui_Game.PauseStateChanged(gamePaused);
     }
 
     void PlayerDestroyed()
