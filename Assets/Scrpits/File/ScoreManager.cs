@@ -31,6 +31,11 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private List<TMP_Text> namesT = new List<TMP_Text>();
     [SerializeField] private List<TMP_Text> scoresT = new List<TMP_Text>();
 
+    void Start()
+    {
+        score = GameManager.Get().ScoreInMach;
+    }
+
     void Update()
     {
         if (inputName.text == ""|| inputName.text.Length != 3)

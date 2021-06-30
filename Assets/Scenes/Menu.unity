@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 10948499}
   - component: {fileID: 10948498}
   - component: {fileID: 10948497}
+  - component: {fileID: 10948500}
   m_Layer: 5
   m_Name: SFX Button
   m_TagString: Untagged
@@ -202,7 +203,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 925069025}
+      - m_Target: {fileID: 215800918841249100, guid: f117fee96fe60b84c8a655b8c1987d32,
+          type: 3}
         m_MethodName: StopAllSFX
         m_Mode: 1
         m_Arguments:
@@ -250,6 +252,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 10948495}
   m_CullTransparentMesh: 0
+--- !u!114 &10948500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10948495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fa8ee0b9ae48a47bb383e441a6db64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 10948497}
 --- !u!1 &265522431
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426411817e3c85348ba614877014f88b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScoreInMach: 0
 --- !u!4 &267328505
 Transform:
   m_ObjectHideFlags: 0

@@ -31,7 +31,10 @@ public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
     {
         StartCoroutine(AsynchronousLoadWithBlackScreen(sceneName));
     }
-
+    public void GoTo(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+    }
     IEnumerator AsynchronousLoadWithFake(string scene)
     {
         loadingProgress = 0;

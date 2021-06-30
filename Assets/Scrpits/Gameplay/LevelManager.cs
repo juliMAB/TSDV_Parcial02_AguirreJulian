@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
         print("Perdite");   //mostrar la derrota.
         //sacarte y llevarte al scoreboard.
         landzones.Clear();
-        pause = true;
+        Pause();
         shipManager.GetData().lessFuel(10);
         if (GetShip().GetData().fuel<=0)
         {
@@ -90,7 +90,7 @@ public class LevelManager : MonoBehaviour
     }
     public void GoNextLevel()
     {
-        pause = false;
+        Pause();
         ResetLevel();
     }
     void EndGame()
@@ -102,13 +102,11 @@ public class LevelManager : MonoBehaviour
 
     void WinMatch()
     {
-        
         print("Ganaste");
         score += 50* getMultiply(); //sumar los puntos. 
-        print("score");
         OnScore?.Invoke(score);
         landzones.Clear();
-        pause = true;
+        Pause();
     }
 
 

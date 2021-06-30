@@ -367,9 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac9e75e8c651d647aa30a77806af637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 840c5376fe0b3524393356effb6c366b, type: 3}
-  _cellSize: 0.5
-  _colorBits: 8
 --- !u!114 &11421108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,8 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b8e8f74f13a342848b4e5018e4d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 2005116699}
-  thisCam: {fileID: 2050490}
 --- !u!114 &11430666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,9 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac9e75e8c651d647aa30a77806af637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 840c5376fe0b3524393356effb6c366b, type: 3}
-  _cellSize: 0.5
-  _colorBits: 8
 --- !u!114 &11455570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,8 +415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b8e8f74f13a342848b4e5018e4d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 2005116699}
-  thisCam: {fileID: 2045880}
 --- !u!114 &11459220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,9 +928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac9e75e8c651d647aa30a77806af637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 840c5376fe0b3524393356effb6c366b, type: 3}
-  _cellSize: 0.5
-  _colorBits: 8
 --- !u!114 &273375605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,8 +941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b8e8f74f13a342848b4e5018e4d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 2005116699}
-  thisCam: {fileID: 273375606}
 --- !u!20 &273375606
 Camera:
   m_ObjectHideFlags: 0
@@ -1298,9 +1283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac9e75e8c651d647aa30a77806af637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 840c5376fe0b3524393356effb6c366b, type: 3}
-  _cellSize: 0.5
-  _colorBits: 8
 --- !u!114 &369264436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,8 +1296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b8e8f74f13a342848b4e5018e4d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 2005116699}
-  thisCam: {fileID: 369264437}
 --- !u!20 &369264437
 Camera:
   m_ObjectHideFlags: 0
@@ -3462,7 +3442,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1256783607}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1529349191}
+        m_MethodName: GoToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1256783607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3646,6 +3637,7 @@ GameObject:
   - component: {fileID: 1529349189}
   - component: {fileID: 1529349188}
   - component: {fileID: 1529349187}
+  - component: {fileID: 1529349191}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3738,6 +3730,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1529349191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529349186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05859359c784b434caa0407d9a5a89a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1538528769
 GameObject:
   m_ObjectHideFlags: 0
@@ -3931,9 +3935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac9e75e8c651d647aa30a77806af637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 840c5376fe0b3524393356effb6c366b, type: 3}
-  _cellSize: 0.5
-  _colorBits: 8
 --- !u!114 &1580697562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3946,8 +3947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b8e8f74f13a342848b4e5018e4d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 2005116699}
-  thisCam: {fileID: 1580697563}
 --- !u!20 &1580697563
 Camera:
   m_ObjectHideFlags: 0
@@ -5775,9 +5774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac9e75e8c651d647aa30a77806af637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 840c5376fe0b3524393356effb6c366b, type: 3}
-  _cellSize: 0.5
-  _colorBits: 8
 --- !u!114 &2127014008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5790,8 +5786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b8e8f74f13a342848b4e5018e4d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 2005116699}
-  thisCam: {fileID: 2127014009}
 --- !u!20 &2127014009
 Camera:
   m_ObjectHideFlags: 0

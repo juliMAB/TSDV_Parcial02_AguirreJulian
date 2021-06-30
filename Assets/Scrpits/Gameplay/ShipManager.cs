@@ -80,17 +80,20 @@ public class ShipManager : MonoBehaviour
     {
         if (TooFast)
         {
+            hide();
             OnDestroy?.Invoke();
             print("me rompi por exceso de facha.");
         }
         //si estoy rotado tengo un margen de error.
-        if (Vector3.Distance(transform.rotation.eulerAngles, Vector3.zero) > 0.1)
+        else if (Vector3.Distance(transform.rotation.eulerAngles, Vector3.zero) > 0.1)
         {
+            hide();
             OnDestroy?.Invoke();
             print("me rompi por no estar recto.");
         }
-        if (data.fuel<=0)
+        else if (data.fuel<=0)
         {
+            hide();
             OnLowFuel?.Invoke();
             print("fin de conbustible.");
         }

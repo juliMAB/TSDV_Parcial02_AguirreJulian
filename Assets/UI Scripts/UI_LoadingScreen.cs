@@ -15,8 +15,8 @@ public class UI_LoadingScreen : MonoBehaviour
 
     public void StartBarLoadingScreen()
     {
-        StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBar, true, fadeSpeed));
-        StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBarOverlay, true, fadeSpeed));
+        //StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBar, true, fadeSpeed));
+        //StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBarOverlay, true, fadeSpeed));
         //StartCoroutine(UI_Generics.CoroutineFadeText(loadingText, true, fadeSpeed));
     }
 
@@ -29,8 +29,8 @@ public class UI_LoadingScreen : MonoBehaviour
 
     public void EndBarLoadingScreen()
     {
-        StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBar, false, fadeSpeed));
-        StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBarOverlay, false, fadeSpeed));
+        //StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBar, false, fadeSpeed));
+        //StartCoroutine(UI_Generics.CoroutineFadeImage(loadingBarOverlay, false, fadeSpeed));
         //StartCoroutine(UI_Generics.CoroutineFadeText(loadingText, false, fadeSpeed));
     }
 

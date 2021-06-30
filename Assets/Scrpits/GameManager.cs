@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
-    int ScoreInMach;
+    public int ScoreInMach;
     public Action<int> OnGameOver;
     private void Start()
     {
