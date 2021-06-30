@@ -71,7 +71,7 @@ public class ScoreManager : MonoBehaviour
     }
     public void SaveFile()
     {
-        string path = Application.persistentDataPath + HighScorePath;
+        string path = HighScorePath;
 
         BinaryFormatter formatter = new BinaryFormatter();
 
@@ -123,7 +123,7 @@ public class ScoreManager : MonoBehaviour
     }
     public void ReadFile()
     {
-        string path = Application.persistentDataPath + HighScorePath;
+        string path = HighScorePath;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
