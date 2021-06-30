@@ -36,11 +36,11 @@ public class UI_LoadingScreen : MonoBehaviour
 
     public void StartBlackScreenLoadingScreen()
     {
-        StartCoroutine(UI_Generics.CoroutineFadeImage(blackScreen, true, fadeSpeed));
+        //StartCoroutine(UI_Generics.CoroutineFadeImage(blackScreen, true, fadeSpeed));
     }
 
     public void EndBlackScreenLoadingScreen()
     {
-        StartCoroutine(UI_Generics.CoroutineFadeImage(blackScreen, false, fadeSpeed));
+        //StartCoroutine(UI_Generics.CoroutineFadeImage(blackScreen, false, fadeSpeed));
     }
 }
